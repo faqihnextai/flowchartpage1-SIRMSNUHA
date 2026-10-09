@@ -1,0 +1,137 @@
+/* Custom Canvas Grid & Wrapper */
+#flow-workspace {
+    background-image: 
+        radial-gradient(#1e293b 1px, transparent 1px), 
+        radial-gradient(#1e293b 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0, 12px 12px;
+}
+
+/* 3D Floating Flow Cards */
+.flow-step-card {
+    width: 250px;
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    border-width: 1px;
+    cursor: pointer;
+    box-shadow: 
+        0 10px 15px -3px rgba(0, 0, 0, 0.4),
+        0 0px 30px rgba(0, 0, 0, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    transform-style: preserve-3d;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px);
+    transition: 
+        transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+        border-color 0.3s, 
+        box-shadow 0.3s,
+        background-color 0.3s;
+}
+
+/* Float Hover & Shadow Effect */
+.flow-step-card:hover {
+    transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-8px);
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.6),
+        0 4px 15px rgba(20, 184, 166, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+/* Flow Arrows & Longer Connections */
+.flow-arrow-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.flow-line {
+    width: 90px; /* Garis horizontal lebih panjang */
+    height: 2px;
+    background: linear-gradient(90deg, rgba(20, 184, 166, 0.1) 0%, rgba(20, 184, 166, 0.5) 50%, rgba(20, 184, 166, 0.1) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Jalur Panah Berkedip Bergerak */
+.flow-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.8), transparent);
+    animation: flowPulse 2s infinite linear;
+}
+
+@keyframes flowPulse {
+    0% { left: -100%; }
+    100% { left: 150%; }
+}
+
+/* Fullscreen Immersive & Transparent Modal */
+.flow-modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(2, 6, 23, 0.45); /* Transparan */
+    backdrop-filter: blur(14px); /* Pengaburan di balik konten */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 1.5rem;
+    animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flow-modal-content {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.85) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    border-radius: 2rem;
+    padding: 2.5rem;
+    max-width: 52rem;
+    width: 100%;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.8),
+        0 0 80px rgba(0, 0, 0, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    transform: scale(0.95);
+    animation: modalScaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    position: relative;
+}
+
+/* Tombol X (Close) Besar & Transparan */
+.modal-close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+    font-size: 1.75rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+    background-color: rgba(244, 63, 94, 0.1);
+    border-color: rgba(244, 63, 94, 0.4);
+    color: #f43f5e;
+    transform: rotate(90deg);
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalScaleUp {
+    from { transform: scale(0.92) translateY(10px); }
+    to { transform: scale(1) translateY(0); }
+}

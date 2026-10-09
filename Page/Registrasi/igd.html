@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flowchart Registrasi IGD - SIRMS NUHA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- html2pdf.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Flowchart Specific CSS -->
+    <link rel="stylesheet" href="../../css/flowchart.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen overflow-hidden flex flex-col select-none">
+
+    <!-- Header & Toolbar -->
+    <div class="m-6 bg-slate-900/80 backdrop-blur-md p-5 rounded-2xl border border-slate-800 shadow-2xl z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h2 class="text-xl font-extrabold text-teal-400 mb-1 flex items-center gap-2 tracking-wide">
+                <i data-lucide="clipboard-list" class="w-6 h-6 animate-pulse"></i>
+                Alur Registrasi IGD & Asesmen Lanjutan
+            </h2>
+            <p class="text-xs text-slate-400 leading-relaxed max-w-3xl">
+                Prinsip Registrasi IGD: <b>"Tindakan medis penyelamatan nyawa selalu diprioritaskan utama, proses birokrasi/registrasi dapat menyusul oleh pihak keluarga."</b>
+            </p>
+        </div>
+        <!-- Zoom & Download Toolbar -->
+        <div class="flex items-center gap-2 bg-slate-950/60 p-1.5 rounded-xl border border-slate-800">
+            <button onclick="UIExtension.zoomIn()" class="p-2 bg-slate-800/80 hover:bg-slate-700/80 rounded-lg transition" title="Zoom In">
+                <i data-lucide="zoom-in" class="w-4 h-4 text-slate-300"></i>
+            </button>
+            <button onclick="UIExtension.zoomOut()" class="p-2 bg-slate-800/80 hover:bg-slate-700/80 rounded-lg transition" title="Zoom Out">
+                <i data-lucide="zoom-out" class="w-4 h-4 text-slate-300"></i>
+            </button>
+            <button onclick="UIExtension.resetZoom()" class="p-2 bg-slate-800/80 hover:bg-slate-700/80 rounded-lg transition text-xs font-semibold px-3 text-slate-300">
+                100%
+            </button>
+            <button onclick="downloadPDF()" class="flex items-center gap-1.5 px-3 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition text-xs font-medium shadow-md">
+                <i data-lucide="download" class="w-4 h-4"></i>
+                <span>Download PDF</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Zoomable Interactive Flowchart Canvas -->
+    <div id="flow-workspace" class="flex-1 overflow-auto cursor-grab active:cursor-grabbing p-12 flex items-center">
+        <div id="flow-container" class="flex items-center gap-8 px-12 py-8 transition-transform duration-300 ease-out origin-left min-w-max">
+
+            <!-- Step 1: Memilih Pasien Triage -->
+            <div onclick="UIExtension.openModal('modal-step1')" class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-teal-400 font-mono text-[10px] uppercase tracking-wider">Langkah 1</span>
+                    <i data-lucide="user-check" class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+                </div>
+                <h3 class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">Memilih Pasien Triage</h3>
+                <p class="text-xs text-slate-400 mt-2 leading-relaxed">Pilih nama pasien dari daftar asesmen Triage yang telah selesai (contoh: Kategori 1 - Resusitasi).</p>
+                <div class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all">
+                    <span>Lihat Detail</span>
+                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                </div>
+            </div>
+
+            <!-- Arrow 1 -->
+            <div class="flow-arrow-container">
+                <div class="flow-line"></div>
+                <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+            </div>
+
+            <!-- Step 2: Tambah Profil Rekam Medis -->
+            <div onclick="UIExtension.openModal('modal-step2')" class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-teal-400 font-mono text-[10px] uppercase tracking-wider">Langkah 2</span>
+                    <i data-lucide="folder-plus" class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+                </div>
+                <h3 class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">Tambah Profil RM</h3>
+                <p class="text-xs text-slate-400 mt-2 leading-relaxed">Pindah ke tab Rekam Medis dan klik tombol "Tambah Profil Rekam Medis".</p>
+                <div class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all">
+                    <span>Lihat Detail</span>
+                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                </div>
+            </div>
+
+            <!-- Arrow 2 -->
+            <div class="flow-arrow-container">
+                <div class="flow-line"></div>
+                <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+            </div>
+
+            <!-- Step 3: Pengisian Profil Rekam Medis -->
+            <div onclick="UIExtension.openModal('modal-step3')" class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-teal-400 font-mono text-[10px] uppercase tracking-wider">Langkah 3</span>
+                    <i data-lucide="file-text" class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+                </div>
+                <h3 class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">Form Rekam Medis</h3>
+                <p class="text-xs text-slate-400 mt-2 leading-relaxed">Pengisian NIK, Nama, TTL, Jenis Kelamin, Golongan Darah, dan Alamat lengkap.</p>
+                <div class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all">
+                    <span>Lihat Detail</span>
+                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                </div>
+            </div>
+
+            <!-- Arrow 3 -->
+            <div class="flow-arrow-container">
+                <div class="flow-line"></div>
+                <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+            </div>
+
+            <!-- Step 4: Data Kunjungan IGD -->
+            <div onclick="UIExtension.openModal('modal-step4')" class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-teal-400 font-mono text-[10px] uppercase tracking-wider">Langkah 4</span>
+                    <i data-lucide="building-2" class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+                </div>
+                <h3 class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">Data Kunjungan IGD</h3>
+                <p class="text-xs text-slate-400 mt-2 leading-relaxed">Pengisian Sub Unit, DPJP / Dokter Bertugas, serta Sebab Sakit pasien.</p>
+                <div class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all">
+                    <span>Lihat Detail</span>
+                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                </div>
+            </div>
+
+            <!-- Arrow 4 -->
+            <div class="flow-arrow-container">
+                <div class="flow-line"></div>
+                <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+            </div>
+
+            <!-- Step 5: Asuransi & Finalisasi Registrasi -->
+            <div onclick="UIExtension.openModal('modal-step5')" class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-teal-400 font-mono text-[10px] uppercase tracking-wider">Langkah 5</span>
+                    <i data-lucide="credit-card" class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+                </div>
+                <h3 class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">Asuransi & Simpan</h3>
+                <p class="text-xs text-slate-400 mt-2 leading-relaxed">Input Penjamin/BPJS, No Rujukan, Cara Masuk, lalu klik Simpan Data Registrasi.</p>
+                <div class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all">
+                    <span>Lihat Detail</span>
+                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                </div>
+            </div>
+
+            <!-- Arrow 5 -->
+            <div class="flow-arrow-container">
+                <div class="flow-line text-amber-500/40"></div>
+                <i data-lucide="chevron-right" class="w-5 h-5 text-amber-500/40"></i>
+            </div>
+
+            <!-- Step 6: Asesmen Lanjutan (Keperawatan & Medis) -->
+            <div onclick="UIExtension.openModal('modal-step6')" class="flow-step-card group bg-slate-900/80 hover:bg-amber-950/20 border-slate-800 hover:border-amber-500/50">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-amber-400 font-mono text-[10px] uppercase tracking-wider">Langkah 6</span>
+                    <i data-lucide="stethoscope" class="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform"></i>
+                </div>
+                <h3 class="font-bold text-sm text-slate-100 group-hover:text-amber-300 transition-colors">Asesmen Keperawatan & Medis</h3>
+                <p class="text-xs text-slate-400 mt-2 leading-relaxed">Pemeriksaan Lanjutan oleh Perawat & Dokter Spesialis/DPJP di IGD.</p>
+                <div class="mt-4 flex items-center gap-1 text-[10px] text-amber-500 font-semibold group-hover:gap-2 transition-all">
+                    <span>Selesai</span>
+                    <i data-lucide="check" class="w-3 h-3"></i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modals Container -->
+    <div id="modal-container">
+        <!-- Modal Step 1 -->
+        <div id="modal-step1" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step1')">
+            <div class="flow-modal-content">
+                <button onclick="UIExtension.closeModal('modal-step1')" class="modal-close-btn">&times;</button>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                            <i data-lucide="user-check" class="w-10 h-10"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-mono text-teal-500 tracking-widest uppercase">Langkah 01 / Registrasi IGD</span>
+                            <h3 class="text-3xl font-extrabold text-white tracking-tight">Memilih Pasien Triage</h3>
+                        </div>
+                    </div>
+                    <div class="h-px bg-slate-800"></div>
+                    <div class="space-y-4">
+                        <p class="text-base text-slate-300 leading-relaxed">
+                            Pada halaman utama Registrasi IGD, sistem menginstruksikan petugas untuk memilih pasien yang telah melewati tahap awal Triage.
+                        </p>
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800/80 flex items-start gap-3">
+                            <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
+                            <div class="text-xs text-slate-400 leading-relaxed">
+                                Contoh: Pasien bernama <b class="text-teal-300">"NANA"</b> dengan status <b class="text-rose-400">"Kategori 1 - Resusitasi"</b> dipilih untuk memicu pembuatan rekam medis dan data pendaftaran kunjungan.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Step 2 -->
+        <div id="modal-step2" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step2')">
+            <div class="flow-modal-content">
+                <button onclick="UIExtension.closeModal('modal-step2')" class="modal-close-btn">&times;</button>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                            <i data-lucide="folder-plus" class="w-10 h-10"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-mono text-teal-500 tracking-widest uppercase">Langkah 02 / Registrasi IGD</span>
+                            <h3 class="text-3xl font-extrabold text-white tracking-tight">Menambah Profil Rekam Medis</h3>
+                        </div>
+                    </div>
+                    <div class="h-px bg-slate-800"></div>
+                    <div class="space-y-4">
+                        <p class="text-base text-slate-300 leading-relaxed">
+                            Setelah memilih data pasien Triage, beralihlah ke tab/menu <b>"Rekam Medis"</b> yang terletak di sebelah kanan.
+                        </p>
+                        <p class="text-sm text-slate-400 leading-relaxed">
+                            Klik tombol <b class="text-teal-400">"Tambah Profil Rekam Medis"</b> jika pasien belum memiliki Nomor Rekam Medis (RM) sebelumnya di faskes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Step 3 -->
+        <div id="modal-step3" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step3')">
+            <div class="flow-modal-content">
+                <button onclick="UIExtension.closeModal('modal-step3')" class="modal-close-btn">&times;</button>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                            <i data-lucide="file-text" class="w-10 h-10"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-mono text-teal-500 tracking-widest uppercase">Langkah 03 / Registrasi IGD</span>
+                            <h3 class="text-3xl font-extrabold text-white tracking-tight">Formulir Profil Rekam Medis</h3>
+                        </div>
+                    </div>
+                    <div class="h-px bg-slate-800"></div>
+                    <div class="space-y-4">
+                        <p class="text-base text-slate-300 leading-relaxed">
+                            Sistem akan mengarahkan ke form "Profile Rekam Medis". Lengkapi identitas dasar pasien berikut:
+                        </p>
+                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-400">
+                            <li class="bg-slate-900/60 p-3 rounded-xl border border-slate-800"><b>NIK:</b> 16 digit Nomor Induk Kependudukan.</li>
+                            <li class="bg-slate-900/60 p-3 rounded-xl border border-slate-800"><b>Nama Pasien:</b> Sesuai identitas resmi.</li>
+                            <li class="bg-slate-900/60 p-3 rounded-xl border border-slate-800"><b>Tempat & Tgl Lahir:</b> Untuk penetapan umur.</li>
+                            <li class="bg-slate-900/60 p-3 rounded-xl border border-slate-800"><b>Jenis Kelamin & Gol. Darah:</b> L/P & ABO/Rhesus.</li>
+                            <li class="bg-slate-900/60 p-3 rounded-xl border border-slate-800 md:col-span-2"><b>Alamat Lengkap:</b> Jalan, RT/RW, Kelurahan, Kecamatan, Kota.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Step 4 -->
+        <div id="modal-step4" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step4')">
+            <div class="flow-modal-content">
+                <button onclick="UIExtension.closeModal('modal-step4')" class="modal-close-btn">&times;</button>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                            <i data-lucide="building-2" class="w-10 h-10"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-mono text-teal-500 tracking-widest uppercase">Langkah 04 / Registrasi IGD</span>
+                            <h3 class="text-3xl font-extrabold text-white tracking-tight">Melengkapi Data Kunjungan IGD</h3>
+                        </div>
+                    </div>
+                    <div class="h-px bg-slate-800"></div>
+                    <div class="space-y-4">
+                        <p class="text-base text-slate-300 leading-relaxed">
+                            Setelah rekam medis terdaftar, isi formulir <b>"Kunjungan IGD"</b> secara presisi:
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                                <div class="text-teal-400 font-bold mb-1">Sub Unit</div>
+                                <p class="text-xs text-slate-400">Area spesifik IGD (Misal: Resusitasi, Triase, Bedah, Non-Bedah).</p>
+                            </div>
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                                <div class="text-teal-400 font-bold mb-1">Dokter DPJP</div>
+                                <p class="text-xs text-slate-400">Dokter penanggung jawab pelayanan yang bertugas.</p>
+                            </div>
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                                <div class="text-teal-400 font-bold mb-1">Sebab Sakit</div>
+                                <p class="text-xs text-slate-400">Kategori umum (Trauma, Non-Trauma, Kebidanan, dll).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Step 5 -->
+        <div id="modal-step5" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step5')">
+            <div class="flow-modal-content">
+                <button onclick="UIExtension.closeModal('modal-step5')" class="modal-close-btn">&times;</button>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                            <i data-lucide="credit-card" class="w-10 h-10"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-mono text-teal-500 tracking-widest uppercase">Langkah 05 / Registrasi IGD</span>
+                            <h3 class="text-3xl font-extrabold text-white tracking-tight">Data Asuransi & Penyimpanan</h3>
+                        </div>
+                    </div>
+                    <div class="h-px bg-slate-800"></div>
+                    <div class="space-y-4">
+                        <p class="text-base text-slate-300 leading-relaxed">
+                            Langkah terakhir adalah penjaminan finansial dan penguncian pendaftaran:
+                        </p>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-teal-400"></i> Pilih Perusahaan Asuransi / BPJS / UMUM.</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-teal-400"></i> Masukkan No. Asuransi / BPJS dan Nomor Rujukan (jika ada).</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-teal-400"></i> Tentukan Cara Masuk Pasien.</li>
+                        </ul>
+                        <div class="pt-2">
+                            <p class="text-xs text-emerald-400 font-bold">Tekan tombol "Simpan" di pojok kanan bawah untuk menyelesaikan pendaftaran.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Step 6 -->
+        <div id="modal-step6" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step6')">
+            <div class="flow-modal-content">
+                <button onclick="UIExtension.closeModal('modal-step6')" class="modal-close-btn">&times;</button>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400">
+                            <i data-lucide="stethoscope" class="w-10 h-10"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-mono text-amber-500 tracking-widest uppercase">Langkah 06 / Asesmen Lanjutan</span>
+                            <h3 class="text-3xl font-extrabold text-white tracking-tight">Asesmen Keperawatan & Medis</h3>
+                        </div>
+                    </div>
+                    <div class="h-px bg-slate-800"></div>
+                    <div class="space-y-4">
+                        <p class="text-base text-slate-300 leading-relaxed">
+                            Setelah pendaftaran terkonfirmasi, pasien ditangani melalui dua tahap asesmen klinis mendalam:
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800">
+                                <h4 class="font-bold text-sm text-teal-400 mb-2">1. Asesmen Keperawatan</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    Pemeriksaan tanda vital komprehensif, pengkajian nyeri, pengkajian keperawatan fisik, diagnosa keperawatan awal, dan intervensi mandiri/kolaboratif perawat.
+                                </p>
+                            </div>
+                            <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800">
+                                <h4 class="font-bold text-sm text-teal-400 mb-2">2. Asesmen Medis</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    Anamnesis mendalam oleh Dokter/DPJP, pemeriksaan fisik organ/sistem, diagnosis kerja, instruksi penunjang (Laboratorium/Radiologi), serta resep obat darurat.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../js/extention.js"></script>
+    <script src="../../js/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.lucide) lucide.createIcons();
+        UIExtension.initZoom();
+      });
+    </script>
+</body>
+</html>

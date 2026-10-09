@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flowchart Asesmen Perawat Rawat Jalan - SIRMS NUHA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- html2pdf.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Flowchart Specific CSS -->
+    <link rel="stylesheet" href="../../css/flowchart.css" />
+  </head>
+  <body class="bg-slate-950 text-slate-100 min-h-screen overflow-hidden flex flex-col select-none">
+    <!-- Header Description -->
+    <div class="m-6 bg-slate-900/80 backdrop-blur-md p-5 rounded-2xl border border-slate-800 shadow-2xl z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <h2 class="text-xl font-extrabold text-teal-400 mb-1 flex items-center gap-2 tracking-wide">
+          <i data-lucide="user-check" class="w-6 h-6 animate-pulse"></i>
+          Alur Asesmen Keperawatan Rawat Jalan - SIRMS NUHA
+        </h2>
+        <p class="text-xs text-slate-400 leading-relaxed max-w-3xl">
+          Pengkajian sistematis perawat poliklinik meliputi <b>Pemilihan Pasien, Tujuan & Screening PRMRJ, Data Subjektif & Riwayat, Skrining Tambahan, Diagnosa, hingga Planning</b>.
+        </p>
+      </div>
+      <!-- Zoom & View Control Toolbar -->
+      <div class="flex items-center gap-2 bg-slate-950/60 p-1.5 rounded-xl border border-slate-800">
+        <button onclick="UIExtension.zoomIn()" class="p-2 bg-slate-800/80 hover:bg-slate-700/80 rounded-lg transition" title="Zoom In">
+          <i data-lucide="zoom-in" class="w-4 h-4 text-slate-300"></i>
+        </button>
+        <button onclick="UIExtension.zoomOut()" class="p-2 bg-slate-800/80 hover:bg-slate-700/80 rounded-lg transition" title="Zoom Out">
+          <i data-lucide="zoom-out" class="w-4 h-4 text-slate-300"></i>
+        </button>
+        <button onclick="UIExtension.resetZoom()" class="p-2 bg-slate-800/80 hover:bg-slate-700/80 rounded-lg transition text-xs font-semibold px-3 text-slate-300">
+          100%
+        </button>
+        <button onclick="downloadPDF()" class="flex items-center gap-1.5 px-3 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition text-xs font-medium shadow-md">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Download PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Zoomable Interactive Flowchart Canvas -->
+    <div id="flow-workspace" class="flex-1 overflow-auto cursor-grab active:cursor-grabbing p-12 flex items-center">
+      <div id="flow-container" class="flex items-center gap-8 px-12 py-8 transition-transform duration-300 ease-out origin-left min-w-max">
+        
+        <!-- Step 1: Pilih Pasien & Tujuan -->
+        <div onclick="UIExtension.openModal('modal-step1')" class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-teal-400 font-mono text-[10px] uppercase tracking-wider">Langkah 1</span>
+            <i data-lucide="users" class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+          </div>
+          <h3 class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">Pilih Pasien & Tujuan</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Pilih nama pasien dari daftar, tentukan Tujuan Kunjungan (Berobat/Kontrol), hasil screening PRMRJ, & catat perawat.
+          </p>
+          <div class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all">
+            <span>Lihat Detail</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+        <!-- Arrow 1 -->
+        <div class="flow-arrow-container">
+          <div class="flow-line"></div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+        </div>
+
+        <!-- Step 2: Data Subjektif & Riwayat -->
+        <div onclick="UIExtension.openModal('modal-step2')" class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-teal-400 font-mono text-[10px] uppercase tracking-wider">Langkah 2</span>
+            <i data-lucide="file-text" class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+          </div>
+          <h3 class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">Data Subjektif & Riwayat</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Pengisian keluhan utama serta pencatatan riwayat kesehatan sebelumnya (sakit/pengobatan) dengan opsi Ada/Tidak Ada.
+          </p>
+          <div class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all">
+            <span>Lihat Detail</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+        <!-- Arrow 2 -->
+        <div class="flow-arrow-container">
+          <div class="flow-line"></div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+        </div>
+
+        <!-- Step 3: Skrining & Pengkajian Holistik -->
+        <div onclick="UIExtension.openModal('modal-step3')" class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-teal-400 font-mono text-[10px] uppercase tracking-wider">Langkah 3</span>
+            <i data-lucide="shield-alert" class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+          </div>
+          <h3 class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">Skrining & Bio Psiko Sosio</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Evaluasi Resiko Jatuh, Skrining Bunuh Diri, serta Pengkajian Bio Psiko Sosio Ekonomi Spiritual Kultural pasien.
+          </p>
+          <div class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all">
+            <span>Lihat Detail</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+        <!-- Arrow 3 -->
+        <div class="flow-arrow-container">
+          <div class="flow-line text-amber-500/40"></div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-amber-500/40"></i>
+        </div>
+
+        <!-- Step 4: Asesmen & Perencanaan -->
+        <div onclick="UIExtension.openModal('modal-step4')" class="flow-step-card group bg-slate-900/80 hover:bg-amber-950/20 border-slate-800 hover:border-amber-500/50">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-amber-400 font-mono text-[10px] uppercase tracking-wider">Langkah 4</span>
+            <i data-lucide="clipboard-check" class="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform"></i>
+          </div>
+          <h3 class="font-bold text-sm text-slate-100 group-hover:text-amber-300 transition-colors">Asesmen & Planning</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Pemilihan kategori, diagnosa (S/O), penentuan rencana keperawatan (planning), lalu klik "Simpan".
+          </p>
+          <div class="mt-4 flex items-center gap-1 text-[10px] text-amber-500 font-semibold group-hover:gap-2 transition-all">
+            <span>Proses Selesai</span>
+            <i data-lucide="check" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Modals Container -->
+    <div id="modal-container">
+      
+      <!-- Modal 1 -->
+      <div id="modal-step1" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step1')">
+        <div class="flow-modal-content">
+          <button onclick="UIExtension.closeModal('modal-step1')" class="modal-close-btn">&times;</button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                <i data-lucide="users" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span class="text-xs font-mono text-teal-500 tracking-widest uppercase">Langkah 01 / Asesmen Rawat Jalan</span>
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">Pilih Pasien & Tujuan Kunjungan</h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Tahap awal dimulainya pengisian Asesmen Keperawatan (Askep) Rawat Jalan:
+              </p>
+              <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-400">
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="user-search" class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"></i>
+                  <span><b>Pilih Pasien</b><br />Di panel kiri sistem, cari dan pilih nama pasien dari daftar kunjungan poliklinik (misal: "NANA").</span>
+                </li>
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="clipboard-list" class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"></i>
+                  <span><b>Tujuan & Screening</b><br />Pada bagian Asesmen Awal, pilih Tujuan Kunjungan (Berobat/Kontrol Rutin), tentukan PRMRJ, & catat perawat.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 2 -->
+      <div id="modal-step2" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step2')">
+        <div class="flow-modal-content">
+          <button onclick="UIExtension.closeModal('modal-step2')" class="modal-close-btn">&times;</button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                <i data-lucide="file-text" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span class="text-xs font-mono text-teal-500 tracking-widest uppercase">Langkah 02 / Asesmen Rawat Jalan</span>
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">Data Subjektif & Riwayat Kesehatan</h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Pengumpulan informasi awal langsung dari pasien atau pendamping:
+              </p>
+              <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-400">
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="message-square" class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"></i>
+                  <span><b>Keluhan Utama</b><br />Mengisi secara ringkas keluhan dirasakan pasien saat berkunjung ke poli rawat jalan.</span>
+                </li>
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="history" class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"></i>
+                  <span><b>Riwayat Kesehatan</b><br />Mencatat riwayat sakit sebelumnya atau pengobatan dengan memilih opsi "Ada" atau "Tidak Ada".</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 3 -->
+      <div id="modal-step3" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step3')">
+        <div class="flow-modal-content">
+          <button onclick="UIExtension.closeModal('modal-step3')" class="modal-close-btn">&times;</button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                <i data-lucide="shield-alert" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span class="text-xs font-mono text-teal-500 tracking-widest uppercase">Langkah 03 / Asesmen Rawat Jalan</span>
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">Skrining & Pengkajian Holistik</h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Pemeriksaan aspek risiko keselamatan dan aspek biopsikososial pasien poliklinik:
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                  <div class="text-teal-400 font-bold mb-1">Skrining Risiko & Mental</div>
+                  <p class="text-xs text-slate-400">Melakukan evaluasi pada bagian Skrining Resiko Jatuh serta Skrining Bunuh Diri secara cermat.</p>
+                </div>
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                  <div class="text-teal-400 font-bold mb-1">Bio Psiko Sosio Kultural</div>
+                  <p class="text-xs text-slate-400">Mengisi lengkap bagian "Pengkajian Bio Psiko Sosio Ekonomi Spiritual Kultural" pasien.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 4 -->
+      <div id="modal-step4" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step4')">
+        <div class="flow-modal-content">
+          <button onclick="UIExtension.closeModal('modal-step4')" class="modal-close-btn">&times;</button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400">
+                <i data-lucide="clipboard-check" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span class="text-xs font-mono text-amber-500 tracking-widest uppercase">Langkah 04 / Asesmen Rawat Jalan</span>
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">Asesmen (Diagnosis) & Planning</h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Penentuan masalah klinis dan rencana tindakan keperawatan akhir:
+              </p>
+              <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-400">
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="stethoscope" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
+                  <span><b>Asesmen & Diagnosa</b><br />Pilih kategori (Keperawatan/Kebidanan), Sub Kategori, Diagnosa, lalu isi data Subjective & Objective.</span>
+                </li>
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="save" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i>
+                  <span><b>Perencanaan & Simpan</b><br />Di Planning, pilih Rencana Keperawatan (misal: "Ajarkan cara etika batuk") dari dropdown, lalu klik "Simpan".</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../js/extention.js"></script>
+    <script src="../../js/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.lucide) lucide.createIcons();
+        UIExtension.initZoom();
+      });
+    </script>
+  </body>
+</html>

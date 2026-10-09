@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flowchart Registrasi Triage - SIRMS NUHA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+        <!-- html2pdf.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Flowchart Specific CSS -->
+    <link rel="stylesheet" href="../../css/flowchart.css" />
+  </head>
+  <body
+    class="bg-slate-950 text-slate-100 min-h-screen overflow-hidden flex flex-col select-none"
+  >
+    <!-- Header Description (Tetap elegan dan informatif) -->
+    <div
+      class="m-6 bg-slate-900/80 backdrop-blur-md p-5 rounded-2xl border border-slate-800 shadow-2xl z-10 flex flex-col md:flex-row md:items-center justify-between gap-4"
+    >
+      <div>
+        <h2
+          class="text-xl font-extrabold text-teal-400 mb-1 flex items-center gap-2 tracking-wide"
+        >
+          <i data-lucide="shield-alert" class="w-6 h-6 animate-pulse"></i>
+          Alur Pelaksanaan Triage di SIRMS NUHA
+        </h2>
+        <p class="text-xs text-slate-400 leading-relaxed max-w-3xl">
+          Prinsip penanganan di IGD:
+          <b
+            >"Siapa yang kondisinya paling mengancam nyawa, dia yang
+            diprioritaskan"</b
+          >
+          (bukan berdasarkan waktu kedatangan).
+        </p>
+      </div>
+      <!-- Zoom & View Control Toolbar -->
+      <!-- Zoom & View Control Toolbar -->
+      <div
+        class="flex items-center gap-2 bg-slate-950/60 p-1.5 rounded-xl border border-slate-800"
+      >
+        <button
+          onclick="UIExtension.zoomIn()"
+          class="p-2 bg-slate-800/80 hover:bg-slate-700/80 rounded-lg transition"
+          title="Zoom In"
+        >
+          <i data-lucide="zoom-in" class="w-4 h-4 text-slate-300"></i>
+        </button>
+        <button
+          onclick="UIExtension.zoomOut()"
+          class="p-2 bg-slate-800/80 hover:bg-slate-700/80 rounded-lg transition"
+          title="Zoom Out"
+        >
+          <i data-lucide="zoom-out" class="w-4 h-4 text-slate-300"></i>
+        </button>
+        <button
+          onclick="UIExtension.resetZoom()"
+          class="p-2 bg-slate-800/80 hover:bg-slate-700/80 rounded-lg transition text-xs font-semibold px-3 text-slate-300"
+        >
+          100%
+        </button>
+
+        <!-- Tombol Download PDF Baru -->
+        <button
+          onclick="downloadPDF()"
+          class="flex items-center gap-1.5 px-3 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition text-xs font-medium shadow-md"
+        >
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Download PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Zoomable Interactive Flowchart Canvas -->
+    <div
+      id="flow-workspace"
+      class="flex-1 overflow-auto cursor-grab active:cursor-grabbing p-12 flex items-center"
+    >
+      <div
+        id="flow-container"
+        class="flex items-center gap-8 px-12 py-8 transition-transform duration-300 ease-out origin-left min-w-max"
+      >
+        <!-- Step 1: Registrasi Awal -->
+        <div
+          onclick="UIExtension.openModal('modal-step1')"
+          class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50"
+        >
+          <div class="flex items-center justify-between mb-2">
+            <span
+              class="text-teal-400 font-mono text-[10px] uppercase tracking-wider"
+              >Langkah 1</span
+            >
+            <i
+              data-lucide="user-plus"
+              class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"
+            ></i>
+          </div>
+          <h3
+            class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors"
+          >
+            Registrasi Awal
+          </h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Input identitas (Nama, NIK, Tgl Lahir), pemilihan DPJP, & riwayat
+            alergi.
+          </p>
+          <div
+            class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all"
+          >
+            <span>Lihat Detail</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+        <!-- Arrow 1 -->
+        <div class="flow-arrow-container">
+          <div class="flow-line"></div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+        </div>
+
+        <!-- Step 2: Data Kedatangan -->
+        <div
+          onclick="UIExtension.openModal('modal-step2')"
+          class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50"
+        >
+          <div class="flex items-center justify-between mb-2">
+            <span
+              class="text-teal-400 font-mono text-[10px] uppercase tracking-wider"
+              >Langkah 2</span
+            >
+            <i
+              data-lucide="ambulance"
+              class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"
+            ></i>
+          </div>
+          <h3
+            class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors"
+          >
+            Data Kedatangan
+          </h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Asal kedatangan, cara datang (jalan/roda/brankar), serta validasi
+            pasien baru/lama.
+          </p>
+          <div
+            class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all"
+          >
+            <span>Lihat Detail</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+        <!-- Arrow 2 -->
+        <div class="flow-arrow-container">
+          <div class="flow-line"></div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+        </div>
+
+        <!-- Step 3: Asesmen Klinis Awal -->
+        <div
+          onclick="UIExtension.openModal('modal-step3')"
+          class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50"
+        >
+          <div class="flex items-center justify-between mb-2">
+            <span
+              class="text-teal-400 font-mono text-[10px] uppercase tracking-wider"
+              >Langkah 3</span
+            >
+            <i
+              data-lucide="activity"
+              class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"
+            ></i>
+          </div>
+          <h3
+            class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors"
+          >
+            Asesmen Klinis
+          </h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Pemeriksaan status Death On Arrival (DOA) jika diperlukan & keluhan
+            utama pasien.
+          </p>
+          <div
+            class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all"
+          >
+            <span>Lihat Detail</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+        <!-- Arrow 3 -->
+        <div class="flow-arrow-container">
+          <div class="flow-line"></div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+        </div>
+
+        <!-- Step 4: Skrining Resiko Jatuh -->
+        <div
+          onclick="UIExtension.openModal('modal-step4')"
+          class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50"
+        >
+          <div class="flex items-center justify-between mb-2">
+            <span
+              class="text-teal-400 font-mono text-[10px] uppercase tracking-wider"
+              >Langkah 4</span
+            >
+            <i
+              data-lucide="footprints"
+              class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"
+            ></i>
+          </div>
+          <h3
+            class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors"
+          >
+            Skrining Resiko Jatuh
+          </h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Observasi keseimbangan postur, cara berjalan, serta kebutuhan alat
+            pegangan.
+          </p>
+          <div
+            class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all"
+          >
+            <span>Lihat Detail</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+        <!-- Arrow 4 -->
+        <div class="flow-arrow-container">
+          <div class="flow-line"></div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+        </div>
+
+        <!-- Step 5: Penilaian Kesadaran (GCS) -->
+        <div
+          onclick="UIExtension.openModal('modal-step5')"
+          class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50"
+        >
+          <div class="flex items-center justify-between mb-2">
+            <span
+              class="text-teal-400 font-mono text-[10px] uppercase tracking-wider"
+              >Langkah 5</span
+            >
+            <i
+              data-lucide="brain-circuit"
+              class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"
+            ></i>
+          </div>
+          <h3
+            class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors"
+          >
+            Penilaian GCS
+          </h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Ukur Glasgow Coma Scale berdasarkan kategori usia (Mata, Motorik,
+            Verbal).
+          </p>
+          <div
+            class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all"
+          >
+            <span>Lihat Detail</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+        <!-- Arrow 5 -->
+        <div class="flow-arrow-container">
+          <div class="flow-line text-amber-500/40"></div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-amber-500/40"></i>
+        </div>
+
+        <!-- Step 6: Kalkulasi Prioritas -->
+        <div
+          onclick="UIExtension.openModal('modal-step6')"
+          class="flow-step-card group bg-slate-900/80 hover:bg-amber-950/20 border-slate-800 hover:border-amber-500/50"
+        >
+          <div class="flex items-center justify-between mb-2">
+            <span
+              class="text-amber-400 font-mono text-[10px] uppercase tracking-wider"
+              >Langkah 6</span
+            >
+            <i
+              data-lucide="calculator"
+              class="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform"
+            ></i>
+          </div>
+          <h3
+            class="font-bold text-sm text-slate-100 group-hover:text-amber-300 transition-colors"
+          >
+            Kalkulasi Prioritas
+          </h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Pilih kategori Triage & hitung prioritas tingkat keparahan otomatis.
+          </p>
+          <div
+            class="mt-4 flex items-center gap-1 text-[10px] text-amber-500 font-semibold group-hover:gap-2 transition-all"
+          >
+            <span>Proses Selesai</span>
+            <i data-lucide="check" class="w-3 h-3"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modals Container (Fullscreen, super smooth, transparan overlay) -->
+    <div id="modal-container">
+      <!-- Modal 1 -->
+      <div
+        id="modal-step1"
+        class="flow-modal hidden"
+        onclick="UIExtension.closeOnOverlay(event, 'modal-step1')"
+      >
+        <div class="flow-modal-content">
+          <button
+            onclick="UIExtension.closeModal('modal-step1')"
+            class="modal-close-btn"
+          >
+            &times;
+          </button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div
+                class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400 shadow-[0_0_20px_rgba(20,184,166,0.1)]"
+              >
+                <i data-lucide="user-plus" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span
+                  class="text-xs font-mono text-teal-500 tracking-widest uppercase"
+                  >Langkah 01 / Registrasi Triage</span
+                >
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">
+                  Registrasi Awal
+                </h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Pada menu <b>"Tambah Triage"</b>, petugas pendaftaran atau
+                perawat memicu alur pelayanan dengan memasukkan data identitas
+                esensial pasien guna pencocokan database (universal patient
+                identifier) dan mitigasi risiko malpraktik:
+              </p>
+              <ul
+                class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-400"
+              >
+                <li
+                  class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80"
+                >
+                  <i
+                    data-lucide="user"
+                    class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"
+                  ></i>
+                  <span
+                    ><b>Nama Lengkap Pasien</b><br />Sesuai kartu identitas
+                    resmi (KTP/KIA).</span
+                  >
+                </li>
+                <li
+                  class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80"
+                >
+                  <i
+                    data-lucide="fingerprint"
+                    class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"
+                  ></i>
+                  <span
+                    ><b>NIK (Nomor Induk Kependudukan)</b><br />Untuk validasi
+                    integrasi data nasional/BPJS.</span
+                  >
+                </li>
+                <li
+                  class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80"
+                >
+                  <i
+                    data-lucide="calendar"
+                    class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"
+                  ></i>
+                  <span
+                    ><b>Tanggal Lahir</b><br />Verifikasi usia guna penentuan
+                    dosis & rentang GCS.</span
+                  >
+                </li>
+                <li
+                  class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80"
+                >
+                  <i
+                    data-lucide="shield-alert"
+                    class="w-5 h-5 text-amber-500 shrink-0 mt-0.5"
+                  ></i>
+                  <span
+                    ><b>Riwayat Alergi Pasien</b><br />Aspek vital keselamatan
+                    untuk mencegah anafilaksis.</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 2 -->
+      <div
+        id="modal-step2"
+        class="flow-modal hidden"
+        onclick="UIExtension.closeOnOverlay(event, 'modal-step2')"
+      >
+        <div class="flow-modal-content">
+          <button
+            onclick="UIExtension.closeModal('modal-step2')"
+            class="modal-close-btn"
+          >
+            &times;
+          </button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div
+                class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400"
+              >
+                <i data-lucide="ambulance" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span
+                  class="text-xs font-mono text-teal-500 tracking-widest uppercase"
+                  >Langkah 02 / Registrasi Triage</span
+                >
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">
+                  Data Kedatangan
+                </h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Di form <b>"Asesmen Triage"</b>, petugas mencatat logistik dan
+                legalitas masuknya pasien untuk asuransi dan dokumentasi hukum:
+              </p>
+              <ul
+                class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-400"
+              >
+                <li
+                  class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80"
+                >
+                  <i
+                    data-lucide="map-pin"
+                    class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"
+                  ></i>
+                  <span
+                    ><b>Asal Usul Kedatangan</b><br />Rujukan faskes, datang
+                    sendiri, atau rujukan luar.</span
+                  >
+                </li>
+                <li
+                  class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80"
+                >
+                  <i
+                    data-lucide="accessibility"
+                    class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"
+                  ></i>
+                  <span
+                    ><b>Cara Datang</b><br />Berjalan mandiri, dengan kursi
+                    roda, atau brankar (berbaring).</span
+                  >
+                </li>
+                <li
+                  class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80"
+                >
+                  <i
+                    data-lucide="shield"
+                    class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"
+                  ></i>
+                  <span
+                    ><b>Keterlibatan Kepolisian</b><br />Mendata kasus trauma,
+                    kecelakaan, KDRT, atau pidana.</span
+                  >
+                </li>
+                <li
+                  class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80"
+                >
+                  <i
+                    data-lucide="database"
+                    class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"
+                  ></i>
+                  <span
+                    ><b>Status Pasien</b><br />Menandai apakah pasien adalah
+                    baru atau lama (rekam medis terdaftar).</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 3 -->
+      <div
+        id="modal-step3"
+        class="flow-modal hidden"
+        onclick="UIExtension.closeOnOverlay(event, 'modal-step3')"
+      >
+        <div class="flow-modal-content">
+          <button
+            onclick="UIExtension.closeModal('modal-step3')"
+            class="modal-close-btn"
+          >
+            &times;
+          </button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div
+                class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400"
+              >
+                <i data-lucide="activity" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span
+                  class="text-xs font-mono text-teal-500 tracking-widest uppercase"
+                  >Langkah 03 / Registrasi Triage</span
+                >
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">
+                  Asesmen Klinis Awal
+                </h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Perawat melakukan triase cepat untuk mengevaluasi tanda-tanda
+                kehidupan awal dan mengukur prioritas klinis utama:
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div
+                  class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800"
+                >
+                  <div class="flex items-center gap-2 mb-2 text-rose-400">
+                    <i data-lucide="heart-off" class="w-5 h-5"></i>
+                    <h4 class="font-bold text-sm">
+                      Validasi DOA (Death On Arrival)
+                    </h4>
+                  </div>
+                  <p class="text-xs text-slate-400 leading-relaxed">
+                    Pengecekan khusus jika pasien tiba tanpa tanda-tanda vital
+                    (seperti napas, nadi karotis, refleks pupil) untuk langsung
+                    dipindahkan ke area penanganan kematian/hukum yang sesuai.
+                  </p>
+                </div>
+                <div
+                  class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800"
+                >
+                  <div class="flex items-center gap-2 mb-2 text-teal-400">
+                    <i data-lucide="message-square" class="w-5 h-5"></i>
+                    <h4 class="font-bold text-sm">Pencatatan Keluhan Utama</h4>
+                  </div>
+                  <p class="text-xs text-slate-400 leading-relaxed">
+                    Deskripsi singkat subjektif mengapa pasien mencari
+                    pertolongan darurat (misal: nyeri dada kiri menjalar, sesak
+                    hebat, penurunan kesadaran).
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 4 -->
+      <div
+        id="modal-step4"
+        class="flow-modal hidden"
+        onclick="UIExtension.closeOnOverlay(event, 'modal-step4')"
+      >
+        <div class="flow-modal-content">
+          <button
+            onclick="UIExtension.closeModal('modal-step4')"
+            class="modal-close-btn"
+          >
+            &times;
+          </button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div
+                class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400"
+              >
+                <i data-lucide="footprints" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span
+                  class="text-xs font-mono text-teal-500 tracking-widest uppercase"
+                  >Langkah 04 / Registrasi Triage</span
+                >
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">
+                  Skrining Resiko Jatuh
+                </h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Sebagai bagian dari <i>Patient Safety Goal</i> faskes, perawat
+                wajib mengamati mobilitas dan fisik pasien untuk meminimalkan
+                insiden cedera tambahan di dalam faskes:
+              </p>
+              <div class="space-y-3">
+                <div
+                  class="bg-slate-900/60 p-4 rounded-xl border border-slate-800/80 flex gap-4"
+                >
+                  <div
+                    class="w-8 h-8 rounded-lg bg-teal-500/10 flex items-center justify-center text-teal-400 shrink-0"
+                  >
+                    1
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-sm text-slate-200">
+                      Observasi Cara Berjalan
+                    </h4>
+                    <p class="text-xs text-slate-400 mt-0.5">
+                      Mengamati apakah ada ketidakstabilan langkah, kelemahan
+                      anggota gerak, atau pincang.
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="bg-slate-900/60 p-4 rounded-xl border border-slate-800/80 flex gap-4"
+                >
+                  <div
+                    class="w-8 h-8 rounded-lg bg-teal-500/10 flex items-center justify-center text-teal-400 shrink-0"
+                  >
+                    2
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-sm text-slate-200">
+                      Kebutuhan Penopang
+                    </h4>
+                    <p class="text-xs text-slate-400 mt-0.5">
+                      Memeriksa apakah pasien membutuhkan tumpuan tangan, kruk,
+                      atau bantuan orang lain saat duduk atau beranjak.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 5 -->
+      <div
+        id="modal-step5"
+        class="flow-modal hidden"
+        onclick="UIExtension.closeOnOverlay(event, 'modal-step5')"
+      >
+        <div class="flow-modal-content">
+          <button
+            onclick="UIExtension.closeModal('modal-step5')"
+            class="modal-close-btn"
+          >
+            &times;
+          </button>
+          <div class="space-y-6 flex flex-col md:flex-row gap-6">
+            <div class="flex-1 space-y-4">
+              <div class="flex items-center gap-3">
+                <div
+                  class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400"
+                >
+                  <i data-lucide="brain-circuit" class="w-10 h-10"></i>
+                </div>
+                <div>
+                  <span
+                    class="text-xs font-mono text-teal-500 tracking-widest uppercase"
+                    >Langkah 05 / Registrasi Triage</span
+                  >
+                  <h3 class="text-3xl font-extrabold text-white tracking-tight">
+                    Penilaian Kesadaran (GCS)
+                  </h3>
+                </div>
+              </div>
+              <div class="h-px bg-slate-800"></div>
+              <p class="text-base text-slate-300 leading-relaxed">
+                Pengukuran tingkat kesadaran kuantitatif pasien via
+                <b>Glasgow Coma Scale (GCS)</b> yang disesuaikan berdasarkan
+                kategori usia (Dewasa vs Anak):
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+                <div
+                  class="bg-slate-950 p-4 rounded-2xl border border-slate-800"
+                >
+                  <div class="text-teal-400 font-bold mb-1">
+                    E (Eye Response)
+                  </div>
+                  <p class="text-xs text-slate-400">
+                    Skor 1-4 untuk mengukur respon membuka mata, dari spontan
+                    hingga tanpa respon.
+                  </p>
+                </div>
+                <div
+                  class="bg-slate-950 p-4 rounded-2xl border border-slate-800"
+                >
+                  <div class="text-teal-400 font-bold mb-1">
+                    M (Motoric Response)
+                  </div>
+                  <p class="text-xs text-slate-400">
+                    Skor 1-6 mengamati gerakan terbaik terhadap perintah verbal
+                    maupun rangsang nyeri.
+                  </p>
+                </div>
+                <div
+                  class="bg-slate-950 p-4 rounded-2xl border border-slate-800"
+                >
+                  <div class="text-teal-400 font-bold mb-1">
+                    V (Verbal Response)
+                  </div>
+                  <p class="text-xs text-slate-400">
+                    Skor 1-5 mendata kualitas berbicara, orientasi kata, hingga
+                    suara tak teratur.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="md:w-72 bg-slate-950 p-4 rounded-2xl border border-slate-800 shrink-0 self-center"
+            >
+              <div
+                class="text-xs font-bold text-teal-400 mb-2 tracking-wider uppercase"
+              >
+                Skala GCS
+              </div>
+              <div class="space-y-2 text-[11px]">
+                <div
+                  class="flex justify-between py-1 border-b border-slate-900"
+                >
+                  <span class="text-slate-300">Compos Mentis (Sadar Penuh)</span
+                  ><span class="font-bold text-teal-500">14-15</span>
+                </div>
+                <div
+                  class="flex justify-between py-1 border-b border-slate-900"
+                >
+                  <span class="text-slate-300">Apatis</span
+                  ><span class="font-bold text-teal-400">12-13</span>
+                </div>
+                <div
+                  class="flex justify-between py-1 border-b border-slate-900"
+                >
+                  <span class="text-slate-300">Somnolen</span
+                  ><span class="font-bold text-yellow-400">10-11</span>
+                </div>
+                <div
+                  class="flex justify-between py-1 border-b border-slate-900"
+                >
+                  <span class="text-slate-300">Delirium</span
+                  ><span class="font-bold text-orange-400">7-9</span>
+                </div>
+                <div
+                  class="flex justify-between py-1 border-b border-slate-900"
+                >
+                  <span class="text-slate-400">Sopor</span
+                  ><span class="font-bold text-red-400">4-6</span>
+                </div>
+                <div class="flex justify-between py-1">
+                  <span class="text-slate-400">Koma</span
+                  ><span class="font-bold text-red-600">3</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 6 -->
+      <div
+        id="modal-step6"
+        class="flow-modal hidden"
+        onclick="UIExtension.closeOnOverlay(event, 'modal-step6')"
+      >
+        <div class="flow-modal-content">
+          <button
+            onclick="UIExtension.closeModal('modal-step6')"
+            class="modal-close-btn"
+          >
+            &times;
+          </button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div
+                class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400"
+              >
+                <i data-lucide="calculator" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span
+                  class="text-xs font-mono text-amber-500 tracking-widest uppercase"
+                  >Langkah 06 / Registrasi Triage</span
+                >
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">
+                  Kalkulasi Prioritas
+                </h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Langkah final di mana semua parameter klinis diolah oleh core
+                system faskes untuk mengonfirmasi urutan kedaruratan medis:
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div
+                  class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 flex items-start gap-3"
+                >
+                  <i
+                    data-lucide="tag"
+                    class="w-6 h-6 text-amber-400 shrink-0"
+                  ></i>
+                  <div>
+                    <h4 class="font-bold text-sm text-slate-200">
+                      Pilih Kategori Triage
+                    </h4>
+                    <p class="text-xs text-slate-400 mt-1">
+                      Perawat menentukan pengelompokan spesifik: Dewasa, Anak,
+                      Jiwa, atau Kasus Spesial Mata.
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 flex items-start gap-3"
+                >
+                  <i
+                    data-lucide="cpu"
+                    class="w-6 h-6 text-emerald-400 shrink-0"
+                  ></i>
+                  <div>
+                    <h4 class="font-bold text-sm text-slate-200">
+                      Hitung Triage Otomatis
+                    </h4>
+                    <p class="text-xs text-slate-400 mt-1">
+                      Menekan tombol <b>"Hitung Triage"</b> memicu kalkulasi
+                      algoritmik dari data yang diinput untuk menetapkan level
+                      triase secara langsung (Level 1 hingga 5).
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../js/extention.js"></script>
+    <script src="../../js/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.lucide) lucide.createIcons();
+        UIExtension.initZoom();
+      });
+    </script>
+  </body>
+</html>

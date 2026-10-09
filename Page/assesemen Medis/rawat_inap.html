@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flowchart Asesmen Medis Awal Rawat Inap - SIRMS NUHA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- html2pdf.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Flowchart Specific CSS -->
+    <link rel="stylesheet" href="../../css/flowchart.css" />
+  </head>
+  <body class="bg-slate-950 text-slate-100 min-h-screen overflow-hidden flex flex-col select-none">
+    <!-- Header Description -->
+    <div class="m-6 bg-slate-900/80 backdrop-blur-md p-5 rounded-2xl border border-slate-800 shadow-2xl z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <h2 class="text-xl font-extrabold text-teal-400 mb-1 flex items-center gap-2 tracking-wide">
+          <i data-lucide="hospital" class="w-6 h-6 animate-pulse"></i>
+          Alur Asesmen Medis Awal Rawat Inap - SIRMS NUHA
+        </h2>
+        <p class="text-xs text-slate-400 leading-relaxed max-w-3xl">
+          Evaluasi medis komprehensif oleh dokter mencakup <b>Subjektif, Objektif & GCS, Skrining EWS & Fisik, Data Penunjang & Diagnosa, Planning & Obat, Edukasi & Indikasi, hingga Discharge Planning & Tindak Lanjut</b>.
+        </p>
+      </div>
+      <!-- Zoom & View Control Toolbar -->
+      <div class="flex items-center gap-2 bg-slate-950/60 p-1.5 rounded-xl border border-slate-800">
+        <button onclick="UIExtension.zoomIn()" class="p-2 bg-slate-800/80 hover:bg-slate-700/80 rounded-lg transition" title="Zoom In">
+          <i data-lucide="zoom-in" class="w-4 h-4 text-slate-300"></i>
+        </button>
+        <button onclick="UIExtension.zoomOut()" class="p-2 bg-slate-800/80 hover:bg-slate-700/80 rounded-lg transition" title="Zoom Out">
+          <i data-lucide="zoom-out" class="w-4 h-4 text-slate-300"></i>
+        </button>
+        <button onclick="UIExtension.resetZoom()" class="p-2 bg-slate-800/80 hover:bg-slate-700/80 rounded-lg transition text-xs font-semibold px-3 text-slate-300">
+          100%
+        </button>
+        <button onclick="downloadPDF()" class="flex items-center gap-1.5 px-3 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition text-xs font-medium shadow-md">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Download PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Zoomable Interactive Flowchart Canvas -->
+    <div id="flow-workspace" class="flex-1 overflow-auto cursor-grab active:cursor-grabbing p-12 flex items-center">
+      <div id="flow-container" class="flex items-center gap-8 px-12 py-8 transition-transform duration-300 ease-out origin-left min-w-max">
+        
+        <!-- Step 1: Kategori & Subjektif -->
+        <div onclick="UIExtension.openModal('modal-step1')" class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-teal-400 font-mono text-[10px] uppercase tracking-wider">Langkah 1</span>
+            <i data-lucide="user-check" class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+          </div>
+          <h3 class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">Kategori & Subjektif</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Penentuan kategori usia (Dewasa/Anak/Neonatus), jenis Anamnesa (Auto/Allo), keluhan, riwayat penyakit, pengobatan & alergi.
+          </p>
+          <div class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all">
+            <span>Lihat Detail</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+        <!-- Arrow 1 -->
+        <div class="flow-arrow-container">
+          <div class="flow-line"></div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+        </div>
+
+        <!-- Step 2: Objektif & GCS -->
+        <div onclick="UIExtension.openModal('modal-step2')" class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-teal-400 font-mono text-[10px] uppercase tracking-wider">Langkah 2</span>
+            <i data-lucide="activity" class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+          </div>
+          <h3 class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">Objektif & GCS</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Pencatatan tanda vital (TD, Suhu, Nadi) kuantitatif dan evaluasi derajat kesadaran neurologis pasien (GCS).
+          </p>
+          <div class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all">
+            <span>Lihat Detail</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+        <!-- Arrow 2 -->
+        <div class="flow-arrow-container">
+          <div class="flow-line"></div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+        </div>
+
+        <!-- Step 3: Skrining EWS & Pemeriksaan Fisik -->
+        <div onclick="UIExtension.openModal('modal-step3')" class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-teal-400 font-mono text-[10px] uppercase tracking-wider">Langkah 3</span>
+            <i data-lucide="stethoscope" class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+          </div>
+          <h3 class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">Skrining EWS & Fisik</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Pengisian parameter EWS, pengkajian fisik multiorgan sistematis, dan pendokumentasian status lokalis.
+          </p>
+          <div class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all">
+            <span>Lihat Detail</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+        <!-- Arrow 3 -->
+        <div class="flow-arrow-container">
+          <div class="flow-line"></div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+        </div>
+
+        <!-- Step 4: Penunjang & Asesmen -->
+        <div onclick="UIExtension.openModal('modal-step4')" class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-teal-400 font-mono text-[10px] uppercase tracking-wider">Langkah 4</span>
+            <i data-lucide="file-spread-sheet" class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+          </div>
+          <h3 class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">Penunjang & Asesmen</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Integrasi hasil Laboratorium/Radiologi, penetapan Diagnosa Utama, dan penentuan Prognosis pasien.
+          </p>
+          <div class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all">
+            <span>Lihat Detail</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+        <!-- Arrow 4 -->
+        <div class="flow-arrow-container">
+          <div class="flow-line"></div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-teal-500/40"></i>
+        </div>
+
+        <!-- Step 5: Planning & Resep -->
+        <div onclick="UIExtension.openModal('modal-step5')" class="flow-step-card group bg-slate-900/80 hover:bg-teal-950/20 border-slate-800 hover:border-teal-500/50">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-teal-400 font-mono text-[10px] uppercase tracking-wider">Langkah 5</span>
+            <i data-lucide="pill" class="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+          </div>
+          <h3 class="font-bold text-sm text-slate-100 group-hover:text-teal-300 transition-colors">Planning & Terapi</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Penyusunan Rencana Asuhan, jadwal prosedur (e.g. Hemodialisa), instruksi Obat Jadi/Racik, & Laboratorium.
+          </p>
+          <div class="mt-4 flex items-center gap-1 text-[10px] text-teal-500 font-semibold group-hover:gap-2 transition-all">
+            <span>Lihat Detail</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+        <!-- Arrow 5 -->
+        <div class="flow-arrow-container">
+          <div class="flow-line text-amber-500/40"></div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-amber-500/40"></i>
+        </div>
+
+        <!-- Step 6: Edukasi, Indikasi & Discharge -->
+        <div onclick="UIExtension.openModal('modal-step6')" class="flow-step-card group bg-slate-900/80 hover:bg-amber-950/20 border-slate-800 hover:border-amber-500/50">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-amber-400 font-mono text-[10px] uppercase tracking-wider">Langkah 6</span>
+            <i data-lucide="clipboard-check" class="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform"></i>
+          </div>
+          <h3 class="font-bold text-sm text-slate-100 group-hover:text-amber-300 transition-colors">Discharge & Tindak Lanjut</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            Pencatatan Edukasi, Indikasi Rawat Inap, Perencanaan Pemulangan Pasien, dan penetapan keputusan status akhir.
+          </p>
+          <div class="mt-4 flex items-center gap-1 text-[10px] text-amber-500 font-semibold group-hover:gap-2 transition-all">
+            <span>Proses Selesai</span>
+            <i data-lucide="check" class="w-3 h-3"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Modals Container -->
+    <div id="modal-container">
+      
+      <!-- Modal 1 -->
+      <div id="modal-step1" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step1')">
+        <div class="flow-modal-content">
+          <button onclick="UIExtension.closeModal('modal-step1')" class="modal-close-btn">&times;</button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                <i data-lucide="user-check" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span class="text-xs font-mono text-teal-500 tracking-widest uppercase">Langkah 01 / Asesmen Medis Rawat Inap</span>
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">Kategori Usia & Data Subjektif</h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Dokter memilih kategori usia serta melengkapi pengkajian anamnesis secara terperinci:
+              </p>
+              <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-400">
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="users" class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"></i>
+                  <span><b>Kategori Usia Pasien</b><br />Tentukan kelompok kategori pasien: Dewasa, Anak, atau Neonatus.</span>
+                </li>
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="message-square" class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"></i>
+                  <span><b>Anamnesis Komprehensif</b><br />Pilih jenis Anamnesa (Auto/Allo), catat Keluhan Utama, Riwayat Penyakit Saat Ini, Riwayat Penyakit Dahulu & Pengobatan, Riwayat Alergi, serta Riwayat Penyakit/Alergi Keluarga.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 2 -->
+      <div id="modal-step2" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step2')">
+        <div class="flow-modal-content">
+          <button onclick="UIExtension.closeModal('modal-step2')" class="modal-close-btn">&times;</button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                <i data-lucide="activity" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span class="text-xs font-mono text-teal-500 tracking-widest uppercase">Langkah 02 / Asesmen Medis Rawat Inap</span>
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">Evaluasi Objektif & GCS</h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Pengukuran kuantitatif parameter vital fisik dan kesadaran neurologis:
+              </p>
+              <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-400">
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="heart-pulse" class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"></i>
+                  <span><b>Tanda-Tanda Vital (TTV)</b><br />Pencatatan parameter vital seperti tekanan darah, suhu tubuh, dan frekuensi nadi secara kuantitatif.</span>
+                </li>
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="brain-circuit" class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"></i>
+                  <span><b>Evaluasi Neurologis (GCS)</b><br />Penilaian tingkat kesadaran secara mendalam menggunakan skala Glasgow Coma Scale (Eye, Verbal, Motorik).</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 3 -->
+      <div id="modal-step3" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step3')">
+        <div class="flow-modal-content">
+          <button onclick="UIExtension.closeModal('modal-step3')" class="modal-close-btn">&times;</button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                <i data-lucide="stethoscope" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span class="text-xs font-mono text-teal-500 tracking-widest uppercase">Langkah 03 / Asesmen Medis Rawat Inap</span>
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">Skrining EWS & Pemeriksaan Fisik</h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Pemeriksaan fisik sistematis dan deteksi dini risiko perburukan pasien:
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                  <div class="text-teal-400 font-bold mb-1">Skrining EWS</div>
+                  <p class="text-xs text-slate-400">Mengisi parameter Early Warning System sesuai standar untuk mengidentifikasi tanda awal kegawatan klinis.</p>
+                </div>
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                  <div class="text-teal-400 font-bold mb-1">Pemeriksaan Organ & Lokalis</div>
+                  <p class="text-xs text-slate-400">Pengkajian fisik multiorgan sistematis serta pendokumentasian spesifik pada bagian Status Lokalis bila ada kelainan fokal.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 4 -->
+      <div id="modal-step4" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step4')">
+        <div class="flow-modal-content">
+          <button onclick="UIExtension.closeModal('modal-step4')" class="modal-close-btn">&times;</button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                <i data-lucide="file-spread-sheet" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span class="text-xs font-mono text-teal-500 tracking-widest uppercase">Langkah 04 / Asesmen Medis Rawat Inap</span>
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">Integrasi Penunjang & Asesmen Diagnostik</h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Sintesis seluruh temuan medis untuk penetapan keputusan klinis:
+              </p>
+              <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-400">
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="flask-conical" class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"></i>
+                  <span><b>Data Pemeriksaan Penunjang</b><br />Input hasil laboratorium, radiologi, serta hasil pemeriksaan penunjang lain yang telah tersedia.</span>
+                </li>
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="file-check-2" class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"></i>
+                  <span><b>Diagnosa Utama & Prognosis</b><br />Merumuskan kesimpulan diagnosis medis utama pada kolom Asesmen serta menentukan proyeksi arah penyakit (Prognosis).</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 5 -->
+      <div id="modal-step5" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step5')">
+        <div class="flow-modal-content">
+          <button onclick="UIExtension.closeModal('modal-step5')" class="modal-close-btn">&times;</button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400">
+                <i data-lucide="pill" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span class="text-xs font-mono text-teal-500 tracking-widest uppercase">Langkah 05 / Asesmen Medis Rawat Inap</span>
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">Perencanaan Terapeutik (Planning)</h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Penyusunan rencana tata laksana medis dan resep obat:
+              </p>
+              <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-400">
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="clipboard-list" class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"></i>
+                  <span><b>Rencana Asuhan & Prosedur</b><br />Menyusun strategi terapeutik (Planning) dan penjadwalan prosedur khusus seperti hemodialisa jika berindikasi.</span>
+                </li>
+                <li class="flex items-start gap-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
+                  <i data-lucide="receipt" class="w-5 h-5 text-teal-400 shrink-0 mt-0.5"></i>
+                  <span><b>Instruksi Obat & Lab Lanjutan</b><br />Menginput rincian resep farmakologis (Obat Jadi/Racik) serta order pemeriksaan Laboratorium lanjutan.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal 6 -->
+      <div id="modal-step6" class="flow-modal hidden" onclick="UIExtension.closeOnOverlay(event, 'modal-step6')">
+        <div class="flow-modal-content">
+          <button onclick="UIExtension.closeModal('modal-step6')" class="modal-close-btn">&times;</button>
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400">
+                <i data-lucide="clipboard-check" class="w-10 h-10"></i>
+              </div>
+              <div>
+                <span class="text-xs font-mono text-amber-500 tracking-widest uppercase">Langkah 06 / Asesmen Medis Rawat Inap</span>
+                <h3 class="text-3xl font-extrabold text-white tracking-tight">Edukasi, Discharge Planning & Tindak Lanjut</h3>
+              </div>
+            </div>
+            <div class="h-px bg-slate-800"></div>
+            <div class="space-y-4">
+              <p class="text-base text-slate-300 leading-relaxed">
+                Pendokumentasian edukasi, justifikasi rawat, perencanaan pulang, dan penetapan status akhir:
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                  <div class="text-amber-400 font-bold mb-1">Edukasi, Indikasi & Discharge</div>
+                  <p class="text-xs text-slate-400">Dokumentasi materi Edukasi pasien/keluarga, justifikasi Indikasi Rawat Inap, serta rancangan Perencanaan Pemulangan Pasien (Discharge Planning).</p>
+                </div>
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                  <div class="text-emerald-400 font-bold mb-1">Keputusan Tindak Lanjut</div>
+                  <p class="text-xs text-slate-400">Menetapkan opsi status akhir: Lanjut Perawatan, Melanjutkan Pengobatan di Faskes lain, Pulang Paksa, Diperbolehkan Pulang, Rujuk/Pindah RS, atau Meninggal.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../js/extention.js"></script>
+    <script src="../../js/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.lucide) lucide.createIcons();
+        UIExtension.initZoom();
+      });
+    </script>
+  </body>
+</html>
